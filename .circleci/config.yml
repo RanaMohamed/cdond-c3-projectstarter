@@ -34,6 +34,20 @@ commands:
           command: |
             python3 -m pip install --user ansible
 
+  install_nodejs:
+    description: "Install Node.js 13"
+    steps:
+      - run:
+          name: "Install Node.js 13"
+          command: |
+            # Install Node.js LTS version as our base Node.js version
+            curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+            sudo apt-get install -y nodejs
+
+            # Use n version manager to use Node.js v13.8.0
+            sudo npm install -g n
+            sudo n 13.8.0
+
   revert-migrations:
     description: Revert the last migration, if any were executed during the current workflow
     parameters:
@@ -235,7 +249,6 @@ jobs:
       - restore_cache:
           keys: [backend-deps]
       - install_awscli
-      - install_ansible
       - run:
           name: Install dependencies
           command: |
@@ -272,6 +285,7 @@ jobs:
           at: ~/
       - install_awscli
       - install_ansible
+      - install_nodejs
       - run:
           name: Install dependencies
           command: |
