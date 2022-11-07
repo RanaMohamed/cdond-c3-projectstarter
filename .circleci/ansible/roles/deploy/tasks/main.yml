@@ -4,10 +4,6 @@
     path: ~/backend-app
     state: directory
 
-- name: "List files"
-  shell: |
-    ls
-
 - name: "Unarchive backend files"
   unarchive:
     src: artifact.tar.gz
