@@ -16,6 +16,24 @@ commands:
             aws cloudformation delete-stack --stack-name udapeople-frontend-<<parameters.Workflow_ID>>
             aws cloudformation delete-stack --stack-name udapeople-backend-<<parameters.Workflow_ID>>
 
+  install_awscli:
+    description: Install AWS CLI v2
+    steps:
+      - run:
+          name: Install AWS CLI v2
+          command: |
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            sudo ./aws/install
+
+  install_ansible:
+    description: Install Ansible
+    steps:
+      - run:
+          name: Install Ansible
+          command: |
+            python3 -m pip install --user ansible
+
 jobs:
   build-frontend:
     docker:
@@ -149,7 +167,27 @@ jobs:
           root: ~/
           paths:
             - project/.circleci/ansible/inventory.txt
-      # Here's where you will add some code to rollback on failure
+      - destroy-environment
+
+  configure-infrastructure:
+    docker:
+      - image: cimg/python:3.10
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints: ["e7:2c:fb:41:88:9b:be:b4:3a:48:9c:6f:10:6a:c7:e4"]
+      - attach_workspace:
+          at: ~/
+      - install_awscli
+      - install_ansible
+      - run:
+          name: Configure server
+          command: |
+            cd .circleci/ansible
+            cat inventory.txt
+
+            ansible-playbook -i inventory.txt configure-server.yml
+      - destroy-environment
 
 workflows:
   default:
@@ -169,3 +207,5 @@ workflows:
           filters:
             branches:
               only: [master]
+      - configure-infrastructure:
+          requires: [deploy-infrastructure]
