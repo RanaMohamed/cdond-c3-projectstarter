@@ -4,27 +4,15 @@
     path: ~/backend-app
     state: directory
 
-- name: print message
-  debug:
-    msg: "{{ execute_node.stdout_lines }}"
-
 - name: "Unarchive backend files"
   unarchive:
     src: artifact.tar.gz
     dest: ~/backend-app
 
-- name: print message
-  debug:
-    msg: "{{ execute_node.stdout_lines }}"
-
 - name: "Installing Node Dependencies and start"
   shell: |
     cd ~/backend-app
     npm i
-
-- name: print message
-  debug:
-    msg: "{{ execute_node.stdout_lines }}"
 
 - name: "Executing Node app with PM2"
   shell: |
