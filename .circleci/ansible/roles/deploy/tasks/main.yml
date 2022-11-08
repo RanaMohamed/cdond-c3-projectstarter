@@ -4,11 +4,6 @@
     path: ~/backend-app
     state: directory
 
-- name: "List files"
-  shell: |
-    ls
-  register: execute_node
-
 - name: print message
   debug:
     msg: "{{ execute_node.stdout_lines }}"
@@ -18,11 +13,6 @@
     src: artifact.tar.gz
     dest: ~/backend-app
 
-- name: "List files"
-  shell: |
-    ls
-  register: execute_node
-
 - name: print message
   debug:
     msg: "{{ execute_node.stdout_lines }}"
@@ -31,11 +21,6 @@
   shell: |
     cd ~/backend-app
     npm i
-
-- name: "List files"
-  shell: |
-    ls
-  register: execute_node
 
 - name: print message
   debug:
