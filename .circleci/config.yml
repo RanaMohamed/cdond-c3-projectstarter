@@ -374,7 +374,7 @@ jobs:
     docker:
       - image: cimg/aws:2022.11
     steps:
-      - Checkout
+      - checkout
       - run:
           name: Get old stack workflow id
           command: |
