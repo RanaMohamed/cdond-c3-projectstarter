@@ -383,7 +383,7 @@ jobs:
               --no-paginate --output text)
             echo OldWorkflowID: "${OldWorkflowID}"
 
-            echo 'export OldWorkflowID=${OldWorkflowID}' >> "$BASH_ENV"
+            echo 'export OldWorkflowID='${OldWorkflowID} >> $BASH_ENV
       - run:
           name: Remove old stacks and files
           command: |
