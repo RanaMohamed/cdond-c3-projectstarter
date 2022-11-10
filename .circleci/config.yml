@@ -298,7 +298,6 @@ jobs:
             npm i
             npm run build
 
-            ls dist
 
             tar -czf artifact.tar.gz dist/* package*
 
