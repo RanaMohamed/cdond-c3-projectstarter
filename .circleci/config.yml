@@ -224,7 +224,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: [backend-deps]
+          keys: [backend-build]
       - install_awscli
       - run:
           name: Run migrations
@@ -247,7 +247,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: [backend-deps]
+          keys: [frontend-build]
       - install_awscli
       - run:
           name: Install dependencies
@@ -278,7 +278,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: [backend-deps]
+          keys: [backend-build]
       - add_ssh_keys:
           fingerprints: ["e7:2c:fb:41:88:9b:be:b4:3a:48:9c:6f:10:6a:c7:e4"]
       - attach_workspace:
@@ -297,6 +297,8 @@ jobs:
             cd backend
             npm i
             npm run build
+
+            ls dist
 
             tar -czf artifact.tar.gz dist/* package*
 
