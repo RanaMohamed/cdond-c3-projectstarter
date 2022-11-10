@@ -383,13 +383,10 @@ jobs:
               --no-paginate --output text)
             echo OldWorkflowID: "${OldWorkflowID}"
 
-            echo $OldWorkflowID >> ~/OldWorkflowID.txt
-            cat ~/OldWorkflowID.txt
+            echo 'export OldWorkflowID=${OldWorkflowID}' >> "$BASH_ENV"
       - run:
           name: Remove old stacks and files
           command: |
-            echo $OldWorkflowID
-            cat OldWorkflowID.txt
             echo $OldWorkflowID
 
             if [[ "${CIRCLE_WORKFLOW_ID:0:7}" =~ "${OldWorkflowID}" ]]
