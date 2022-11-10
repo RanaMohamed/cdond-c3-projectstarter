@@ -21,6 +21,7 @@
     pm2 start main.js
     sleep 30
     pm2 logs --lines 500 --nostream
+    curl http://localhost:3030/api/status
 
   register: execute_node
 
